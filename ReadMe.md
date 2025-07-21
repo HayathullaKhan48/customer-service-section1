@@ -6,7 +6,7 @@ Customer service section1 microservice implementation
 3. /api/customer/getById/{customerId}
 4. /api/customer/update
 5. /api/customer/update/mobileNumber/{mobileNumber}
-6. /api/customer/delete
+6. /api/customer/deleteById/{customerId}
 
 ## Http mapping method
 1. PostMapping
