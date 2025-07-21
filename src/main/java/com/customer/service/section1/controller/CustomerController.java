@@ -15,11 +15,6 @@ public class CustomerController {
 
     Collection<CustomerResponse> customers = new ArrayList<>();
 
-    /**
-     * Creates a new customer record
-     * @param request CustomerResponse object containing customer details
-     * @return String confirmation message
-     */
     @PostMapping("/create")
     public ResponseEntity<String> createCustomer(@RequestBody CustomerRequest request) {
         customers.add(CustomerResponse.builder()
@@ -32,21 +27,11 @@ public class CustomerController {
     }
 
 
-    /**
-     * Retrieves all registered customers
-     * @return Collection of all CustomerResponse objects
-     */
     @GetMapping("/getData")
     public Collection<CustomerResponse> getCustomers() {
         return customers;
     }
 
-    /**
-     * Retrieves a specific customer by their ID
-     * @param customerId The ID of the customer to retrieve
-     * @return CustomerResponse object for the requested customer
-     * @throws RuntimeException if customer is not found
-     */
     @GetMapping("/getById/{customerId}")
     public CustomerResponse getCustomerById(@PathVariable int customerId) {
         return customers.stream()
@@ -55,11 +40,6 @@ public class CustomerController {
                 .orElseThrow(() -> new RuntimeException("Customer with ID " + customerId + " not found."));
     }
 
-    /**
-     * Deletes a customer by their ID
-     * @param customerId The ID of the customer to delete
-     * @return String confirmation message indicating success or failure
-     */
     @DeleteMapping("/deleteById/{customerId}")
     public String deleteCustomer(@PathVariable int customerId) {
         boolean removed = customers.removeIf(customer -> customer.getCustomerId() == customerId);
@@ -68,11 +48,6 @@ public class CustomerController {
                 : "Customer with ID " + customerId + " not found.";
     }
 
-    /**
-     * Updates all fields of a customer record
-     * @param request CustomerRequest object containing updated customer details
-     * @return String confirmation message indicating success or failure
-     */
     @PutMapping("/update")
     public String updateCustomer(@RequestBody CustomerRequest request) {
         for (CustomerResponse customer : customers) {
@@ -86,12 +61,6 @@ public class CustomerController {
         return "Customer with ID " + request.getCustomerId() + " not found.";
     }
 
-    /**
-     * Partially updates specific fields of a customer record
-     * @param customerId The ID of the customer to update
-     * @param mobileNumber mobile number to update the customer data
-     * @return String confirmation message indicating success or failure
-     */
     @PatchMapping("/update/mobileNumber/{customerId}/{mobileNumber}")
     public String patchCustomer(@PathVariable int customerId, @PathVariable String mobileNumber) {
         Optional<CustomerResponse> customerData = customers.stream()
